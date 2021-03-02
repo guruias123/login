@@ -69,8 +69,10 @@ app.use(bodyParser.json());
 
 app.use(cors())
 app.get('/',(req,res) => {
-    res.send("Health ok");
-  });
+    res.send(
+        "<a href='https://github.com/login/oauth/authorize?client_id=10f25cf6b11a008eb433'>Login With Github</a>"
+        )
+});
 app.post('/users',(req,res) => {
     console.log("<<<<",req.body)
     superagent
