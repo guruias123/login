@@ -73,14 +73,14 @@ app.get('/',(req,res) => {
         "<a href='https://github.com/login/oauth/authorize?client_id=10f25cf6b11a008eb433'>Login With Github</a>"
         )
 });
-app.post('/users',(req,res) => {
-    console.log("<<<<",req.body)
+app.get('/users',(req,res) => {
+    console.log("<<<<",req.query)
     superagent
     .post('https://github.com/login/oauth/access_token')
     .send({
         client_secret:'a02f98864d61f2d3d722d447de833f108daa51d4',
         client_id:'10f25cf6b11a008eb433',
-        code:req.body.code
+        code:req.query.code
     })
     .set('Accept','application/json')
     .end((err,result) => {
