@@ -68,7 +68,9 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
 app.use(cors())
-
+app.get('/',(req,res) => {
+    res.send("Health ok");
+  });
 app.post('/users',(req,res) => {
     console.log("<<<<",req.body)
     superagent
