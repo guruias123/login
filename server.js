@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express();
-const port =process.env.PORT || 8700;
+const port =process.env.PORT || 8600;
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
 const bodyParser = require('body-parser');
@@ -43,6 +43,13 @@ app.get('/cart1',(req,res)=>{
   })
 })
 
+app.get('/cart1/:login',(req,res) =>{
+  var login = req.params.login
+  db.collection('cart').find({login1:login}).toArray((err,result) => {
+    if(err) throw err;
+    res.send(result)
+  })
+})
 
 
 app.get('/shirts/:id',(req,res) =>{
