@@ -37,19 +37,17 @@ app.post('/cart', (req,res)=>{
  
 
 app.get('/cart1',(req,res)=>{
+  var condition={}
+  if(req.query.login1){
+    condition={login1:req.query.login1}
+  }
   db.collection('cart').find({}).toArray((err,result)=>{
     if(err) throw err;
     res.send(result);
   })
 })
 
-app.get('/cart1/:login',(req,res) =>{
-  var login = req.params.login
-  db.collection('cart').find({login1:login}).toArray((err,result) => {
-    if(err) throw err;
-    res.send(result)
-  })
-})
+
 
 
 app.get('/shirts/:id',(req,res) =>{
