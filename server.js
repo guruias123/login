@@ -37,11 +37,7 @@ app.post('/cart', (req,res)=>{
  
 
 app.get('/cart1',(req,res)=>{
-  var condition={};
-  if(req.query.GoogleId){
-    condition={GoogleId:req.query.login1}
-  }
-  db.collection('cart').find({condition}).toArray((err,result)=>{
+  db.collection('cart').find({}).toArray((err,result)=>{
     if(err) throw err;
     res.send(result);
   })
