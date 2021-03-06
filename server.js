@@ -41,7 +41,7 @@ app.get('/cart1',(req,res)=>{
   if(req.query.login1){
     condition={login1:req.query.login1}
   }
-  db.collection('cart').find({}).toArray((err,result)=>{
+  db.collection('cart').find(condition).toArray((err,result)=>{
     if(err) throw err;
     res.send(result);
   })
