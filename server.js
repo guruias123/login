@@ -38,19 +38,14 @@ app.get('/shirts', (req,res)=>{
 })
 
 app.post('/cart', (req,res)=>{
-    var id=req.params.id
-  db.collection('cart').insert(login1=id,(err,result)=>{
+   
+  db.collection('cart').insert(req.body,(err,result)=>{
           if(err) throw err;
           res.send(result)
   })
 })
 
-app.delete('/cart1', (req,res)=>{
-  db.collection('cart').remove(req.body,(err,result)=>{
-          if(err) throw err;
-          res.send(result)
-  })
-})
+
  
 
 app.get('/cart1',(req,res)=>{
