@@ -22,7 +22,16 @@ app.get('/', (req,res)=>{
 )
 
 app.get('/shirts', (req,res)=>{
-    db.collection('shirts').find({}).toArray((err,result)=>{
+  var condition ={};
+  
+  if(req.query.model&&req.query.lcost && req.query.hcost){
+    condition={$and:[{'model':req.query.model},{cost:{$lt:Number(req.query.hcost),$gt:Number(req.query.lcost)}}]}
+
+  }
+  else if(req.query.model){
+    condition={"model":req.query.model}
+  }
+    db.collection('shirts').find(condition).toArray((err,result)=>{
             if(err) throw err;
             res.send(result)
     })
@@ -30,6 +39,13 @@ app.get('/shirts', (req,res)=>{
 
 app.post('/cart', (req,res)=>{
   db.collection('cart').insert(req.body,(err,result)=>{
+          if(err) throw err;
+          res.send(result)
+  })
+})
+
+app.delete('/cart', (req,res)=>{
+  db.collection('cart').remove(req.body,(err,result)=>{
           if(err) throw err;
           res.send(result)
   })
