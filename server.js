@@ -38,7 +38,8 @@ app.get('/shirts', (req,res)=>{
 })
 
 app.post('/cart', (req,res)=>{
-  db.collection('cart').insert(req.body,(err,result)=>{
+    var id=req.params.id
+  db.collection('cart').insert(login1=id,(err,result)=>{
           if(err) throw err;
           res.send(result)
   })
