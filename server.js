@@ -59,7 +59,7 @@ app.get('/cart1',(req,res)=>{
   })
 })
 
-app.delete('/cart1/:id',(req,res)=>{
+app.delete('/cart1/id',(req,res)=>{
   var id = req.params.id
   db.collection('cart').remove({_id:id}).toArray((err,result)=>{
     if(err) throw err;
