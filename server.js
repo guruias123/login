@@ -44,7 +44,7 @@ app.post('/cart', (req,res)=>{
   })
 })
 
-app.delete('/cart', (req,res)=>{
+app.delete('/cart1', (req,res)=>{
   db.collection('cart').remove(req.body,(err,result)=>{
           if(err) throw err;
           res.send(result)
