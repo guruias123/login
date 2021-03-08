@@ -76,6 +76,14 @@ app.delete('/removeItem',(req,res)=>{
   })
   
 })
+app.delete('/removeItem1',(req,res)=>{
+  var id=mongo.ObjectID(req.body._id)
+  db.collection('cart').remove({_id:id},(err,result)=>{
+    if(err) throw err;
+    res.send('item removed suceesfully')
+  })
+  
+})
 app.get('/pants/:id',(req,res) =>{
   var id = req.params.id
   db.collection('pants').find({_id:id}).toArray((err,result) => {
