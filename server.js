@@ -24,13 +24,17 @@ app.get('/', (req,res)=>{
 app.get('/shirts', (req,res)=>{
   var condition ={};
   
-  if(req.query.model&&req.query.lcost && req.query.hcost){
-    condition={$and:[{'model':req.query.model},{cost:{$lt:Number(req.query.hcost),$gt:Number(req.query.lcost)}}]}
-
-  }
-  else if(req.query.model){
-    condition={"model":req.query.model}
-  }
+//   if(req.query.model&&req.query.lcost && req.query.hcost){
+//     condition={$and:[{model:req.query.model},{cost:{$lt:Number(req.query.hcost),$gt:Number(req.query.lcost)}}]};
+//     condition={$and:[{"type.mealtype":req.query.mealtype},{cost:{$lt:Number(req.query.hcost),$gt:Number(req.query.lcost)}}]}
+//  }
+ if(req.query.model && req.query.lcost && req.query.hcost){
+  condition={$and:[{model:req.query.model},{cost:{$lt:Number(req.query.hcost),$gt:Number(req.query.lcost)}}]}
+}
+else if(req.query.model){
+  condition={model:req.query.model}
+}
+  
     db.collection('shirts').find(condition).toArray((err,result)=>{
             if(err) throw err;
             res.send(result)
@@ -44,12 +48,13 @@ app.post('/cart', (req,res)=>{
   })
 })
 
-app.delete('/cart', (req,res)=>{
-  db.collection('cart').remove(req.body,(err,result)=>{
-          if(err) throw err;
-          res.send(result)
-  })
-})
+// app.delete('/cart1', (req,res)=>{
+//   var id = req.params.id
+//   db.collection('cart').remove(login1=id,(err,result)=>{
+//           if(err) throw err;
+//           res.send(result)
+//   })
+// })
  
 
 app.get('/cart1',(req,res)=>{
@@ -63,7 +68,21 @@ app.get('/cart1',(req,res)=>{
   })
 })
 
-
+app.delete('/removeItem',(req,res)=>{
+  var id=mongo.ObjectID(req.body._id)
+  db.collection('cart').remove({_id:id},(err,result)=>{
+    if(err) throw err;
+    res.send('item removed suceesfully')
+  })
+  
+})
+app.get('/pants/:id',(req,res) =>{
+  var id = req.params.id
+  db.collection('pants').find({_id:id}).toArray((err,result) => {
+    if(err) throw err;
+    res.send(result)
+  })
+})
 
 
 app.get('/shirts/:id',(req,res) =>{
@@ -115,42 +134,3 @@ MongoClient.connect(mongourl,(err,connection) => {
 
 
 
-//   const express=require('express');
-// const app=express();
-// const port=process.env.PORT||4002;
-// const mongo=require('mongodb');
-// const mongourl='mongodb://localhost:27017';
-// let db;
-// const MongoClient=mongo.MongoClient;
-// const cors=require('cors');
-// const bodyParser=require('body-parser');
-
-// app.use(cors());
-// app.use(bodyParser.urlencoded({extended:true}));
-// app.use(bodyParser.json());
-
-// app.listen(port,(err)=>{
-//     if(err) throw err;
-//     console.log(`server is running on ${port}`)
-// })
-// app.get('/',(req,res)=>{
-//     res.send('health is ok');
-// })
-
-// app.get('/mobiles',(req,res)=>{
-//     var condition={}
-//     if(req.query.name){
-//         condition={Name:req.query.name}
-//     }
-//     db.collection('mistore').find(condition).toArray((err,result)=>{
-//          if(err) throw err;
-//          res.send(result)
-//     })
-// })
-
-
-
-// MongoClient.connect(mongourl,(err,connection)=>{
-//         if(err) throw err;
-//         db=connection.db('mistore');
-// })
