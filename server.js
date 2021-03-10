@@ -31,11 +31,8 @@ app.get('/shirts', (req,res)=>{
  if(req.query.model && req.query.lcost && req.query.hcost){
   condition={$and:[{model:req.query.model},{cost:{$lt:Number(req.query.hcost),$gt:Number(req.query.lcost)}}]}
 }
-else if(req.query.model){
-  condition={model:req.query.model}
-}
-  
-    db.collection('shirts').find(condition).toArray((err,result)=>{
+
+  db.collection('shirts').find({condition}).toArray((err,result)=>{
             if(err) throw err;
             res.send(result)
     })
@@ -125,7 +122,32 @@ app.get('/pants', (req,res)=>{
       res.send(result)
     })
 })
-
+app.get('/carosal',(req,res)=>{
+  db.collection('carosal').find({}).toArray((err,result)=>{
+    if(err) throw err;
+    res.send(result)
+  })
+})
+app.get('/carosal/:id',(req,res)=>{
+  var id = req.params.id
+  db.collection('carosal').find({_id:id}).toArray((err,result) => {
+    if(err) throw err;
+    res.send(result)
+  })
+})
+app.get('/brand',(req,res)=>{
+  db.collection('brand').find({}).toArray((err,result)=>{
+    if(err) throw err;
+    res.send(result)
+  })
+})
+app.get('/brand/:id',(req,res)=>{
+  var id = req.params.id
+  db.collection('brand').find({_id:id}).toArray((err,result) => {
+    if(err) throw err;
+    res.send(result)
+  })
+})
 MongoClient.connect(mongourl,(err,connection) => {
     if(err) console.log(err);
     db = connection.db('amazon');
